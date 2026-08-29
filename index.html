@@ -37,7 +37,7 @@
   a{color:inherit;}
 
   .wrap{
-    max-width:1080px;
+    max-width:1320px;
     margin:0 auto;
     padding:0 32px;
   }
@@ -50,7 +50,7 @@
     display:flex; align-items:center; justify-content:space-between;
   }
   .brand img{
-    height:88px;
+    height:clamp(90px, 12vw, 160px);
     width:auto;
     display:block;
     /* the wordmark is a translucent "ghost" fill by design (Invisible…),
@@ -96,26 +96,26 @@
   }
   .hero-grid{
     display:grid;
-    grid-template-columns:1.1fr 1fr;
-    gap:56px;
+    grid-template-columns:1.3fr 1fr;
+    gap:48px;
     align-items:center;
   }
   @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
 
   h1.display{
-    font-size:clamp(46px, 6.6vw, 76px);
-    line-height:1.05;
+    font-size:clamp(56px, 8.2vw, 108px);
+    line-height:1.02;
     letter-spacing:-0.01em;
     margin-bottom:26px;
   }
   .hero-copy p{
-    font-size:16px;
+    font-size:18px;
     color:var(--ink-dim);
     max-width:48ch;
     margin-bottom:16px;
   }
   .hero-copy .lead{
-    font-size:26px;
+    font-size:30px;
     color:var(--ink);
     margin-top:8px;
   }
@@ -154,7 +154,7 @@
     margin-bottom:10px;
     text-transform:uppercase;
   }
-  h2.display{font-size:clamp(32px, 4.4vw, 44px); letter-spacing:-0.01em; margin-bottom:10px;}
+  h2.display{font-size:clamp(38px, 5.4vw, 56px); letter-spacing:-0.01em; margin-bottom:10px;}
 
   /* features */
   .features{
@@ -192,7 +192,7 @@
     margin-bottom:44px;
   }
   @media (max-width:760px){ .cta-top{grid-template-columns:1fr;} }
-  .cta-top h3.display{font-size:clamp(26px, 3.4vw, 34px); line-height:1.2;}
+  .cta-top h3.display{font-size:clamp(32px, 4.2vw, 42px); line-height:1.15;}
   .cta-top .social{justify-content:center; padding-top:6px;}
   .cta-top .right h3{text-align:right;}
   @media (max-width:760px){ .cta-top .right h3{text-align:left;} .cta-top .social{justify-content:flex-start;} }
