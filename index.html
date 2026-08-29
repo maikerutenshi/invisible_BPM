@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InvisibleRPM · Cubre el BPM en Rekordbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBE7D6;
+    --bg-soft: #F6DBC3;
+    --card: #FFF4E8;
+    --ink: #1B1B1B;
+    --ink-dim: #6b6459;
+    --coral: #E9714F;
+    --coral-dim: #c85f40;
+    --yellow: #F0B429;
+    --line: rgba(27,27,27,0.14);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .display{font-family:'Archivo Black', sans-serif;}
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    padding:28px 0 8px;
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand img{
+    height:88px;
+    width:auto;
+    display:block;
+    /* the wordmark is a translucent "ghost" fill by design (Invisible…),
+       these layered shadows add a dark edge so it reads on light backgrounds */
+    filter:
+      drop-shadow(0 1px 0 rgba(0,0,0,0.55))
+      drop-shadow(0 -1px 0 rgba(0,0,0,0.55))
+      drop-shadow(1px 0 0 rgba(0,0,0,0.55))
+      drop-shadow(-1px 0 0 rgba(0,0,0,0.55));
+  }
+  .nav-right{display:flex; align-items:center; gap:18px;}
+  .social{display:flex; align-items:center; gap:14px;}
+  .social a{
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink);
+    transition:background .15s;
+  }
+  .social a:hover{background:rgba(27,27,27,0.08);}
+  .social svg{width:16px; height:16px;}
+  .lang{
+    display:flex; align-items:center; gap:6px;
+    font-size:14px; color:var(--ink);
+    border:none; background:none; cursor:default;
+  }
+  @media (max-width:560px){ .lang span.txt{display:none;} }
+  .lang-switch{
+    display:flex; align-items:center; gap:6px;
+    color:var(--ink);
+  }
+  .lang-sep{color:var(--ink-dim); font-size:13px;}
+  .lang-opt{
+    border:none; background:none; cursor:pointer;
+    font-family:inherit; font-size:13px; font-weight:600;
+    color:var(--ink-dim); padding:2px 2px;
+  }
+  .lang-opt.active{color:var(--ink); text-decoration:underline; text-underline-offset:3px;}
+  .lang-opt:hover{color:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:32px 0 72px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+
+  h1.display{
+    font-size:clamp(46px, 6.6vw, 76px);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    margin-bottom:26px;
+  }
+  .hero-copy p{
+    font-size:16px;
+    color:var(--ink-dim);
+    max-width:48ch;
+    margin-bottom:16px;
+  }
+  .hero-copy .lead{
+    font-size:26px;
+    color:var(--ink);
+    margin-top:8px;
+  }
+
+  /* video / screenshot frame */
+  .video-frame{
+    position:relative;
+    border-radius:18px;
+    border:2px solid var(--ink);
+    overflow:hidden;
+    background:#0c0d10;
+    aspect-ratio:16/10;
+    box-shadow:8px 8px 0 var(--coral);
+  }
+  .video-frame video{width:100%; height:100%; display:block; object-fit:cover;}
+  .tag-badge{
+    position:absolute;
+    background:var(--ink);
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:20px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    pointer-events:none;
+  }
+  .tag-badge.a{ top:38%; left:28%; }
+  .tag-badge.b{ top:60%; left:58%; }
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:56px 0;}
+  .section-tag.display{
+    font-size:13px;
+    color:var(--coral-dim);
+    letter-spacing:0.06em;
+    margin-bottom:10px;
+    text-transform:uppercase;
+  }
+  h2.display{font-size:clamp(32px, 4.4vw, 44px); letter-spacing:-0.01em; margin-bottom:10px;}
+
+  /* features */
+  .features{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  @media (max-width:760px){ .features{grid-template-columns:1fr;} }
+  .feature{
+    background:var(--card);
+    border:1.5px solid var(--ink);
+    border-radius:14px;
+    padding:26px 24px;
+  }
+  .feature .num.display{
+    color:var(--coral);
+    font-size:13px;
+    margin-bottom:12px;
+  }
+  .feature h3{font-size:16px; font-weight:700; margin-bottom:8px;}
+  .feature p{font-size:14px; color:var(--ink-dim);}
+
+  /* CTA / footer band */
+  .cta-band{
+    background:var(--bg-soft);
+    border-radius:26px;
+    padding:56px 40px;
+    margin:8px 0 40px;
+  }
+  .cta-top{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    gap:24px;
+    align-items:start;
+    margin-bottom:44px;
+  }
+  @media (max-width:760px){ .cta-top{grid-template-columns:1fr;} }
+  .cta-top h3.display{font-size:clamp(26px, 3.4vw, 34px); line-height:1.2;}
+  .cta-top .social{justify-content:center; padding-top:6px;}
+  .cta-top .right h3{text-align:right;}
+  @media (max-width:760px){ .cta-top .right h3{text-align:left;} .cta-top .social{justify-content:flex-start;} }
+
+  .cta-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:760px){ .cta-buttons{grid-template-columns:1fr;} }
+  .cta-group{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:420px){ .cta-group{grid-template-columns:1fr;} }
+
+  .pill-btn{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:18px 14px;
+    border-radius:28px;
+    border:1.5px solid var(--coral);
+    color:var(--coral-dim);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    text-decoration:none;
+    line-height:1.3;
+    transition:background .15s, color .15s;
+  }
+  .pill-btn br{content:""; display:block; height:6px;}
+  .pill-btn span:last-child{font-size:14px; letter-spacing:0.03em;}
+  .pill-btn:hover{background:var(--coral); color:#fff;}
+
+  footer.credits{
+    padding:0 0 48px;
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-dim);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><img src="logo.png" alt="InvisibleRPM"></div>
+    <div class="nav-right">
+      <div class="social">
+        <a href="#descargas" aria-label="Enlace directo" title="Ir a descargas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.5-1.5"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.87.24-1.46 1.5-1.46H16.5V4.34C16.24 4.3 15.36 4.2 14.33 4.2c-2.14 0-3.6 1.31-3.6 3.7v2.6H8.3v3h2.43V21h2.77Z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.7"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+      </div>
+      <div class="lang-switch">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3Z"/></svg>
+        <button class="lang-opt" data-lang="es" type="button">ES</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-opt" data-lang="en" type="button">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="video-frame">
+        <!-- Sustituye "demo.mp4" por la ruta o URL real de tu vídeo -->
+        <video controls preload="metadata">
+          <source src="demo.mp4" type="video/mp4">
+          Tu navegador no soporta vídeo HTML5.
+        </video>
+        <span class="tag-badge a" data-i18n="badge1">Tapa los BPM</span>
+        <span class="tag-badge b" data-i18n="badge2">Tapa los BPM</span>
+      </div>
+
+      <div class="hero-copy">
+        <h1 class="display" data-i18n="hero_h1">Aprende desde los cimientos:</h1>
+        <p data-i18n="hero_p1">Además de desactivar el SYNC, es muy importante dejar de ver los BPM, como si tocáramos con vinilos.</p>
+        <p data-i18n="hero_p2">Ya no necesitas pegar posits en la pantalla: ha llegado una aplicación sencilla que te permite dejar de ver los BPM para afinar el oído y aprender de forma robusta.</p>
+        <p class="lead display" style="font-size:22px;" data-i18n="hero_lead">Ha llegado InvisibleRPM</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-tag display" data-i18n="feat_tag">Qué hace</div>
+    <h2 class="display" data-i18n="feat_h2">Tres detalles que importan</h2>
+    <div class="features" style="margin-top:28px;">
+      <div class="feature">
+        <div class="num display">01</div>
+        <h3 data-i18n="feat1_t">Arrastrable y redimensionable</h3>
+        <p data-i18n="feat1_p">Coloca las dos ventanas negras exactamente donde quieras taparlas, ajusta el tamaño a tu gusto.</p>
+      </div>
+      <div class="feature">
+        <div class="num display">02</div>
+        <h3 data-i18n="feat2_t">Con tu logo</h3>
+        <p data-i18n="feat2_p">Inserta una imagen (BMP, JPG o PNG) que se reescala sola con la ventana. Tu marca, tu sesión.</p>
+      </div>
+      <div class="feature">
+        <div class="num display">03</div>
+        <h3 data-i18n="feat3_t">Español e inglés</h3>
+        <p data-i18n="feat3_p">Cambia el idioma desde el menú de clic derecho, sin reiniciar nada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="descargas">
+  <div class="wrap">
+    <div class="cta-band">
+      <div class="cta-top">
+        <div class="left">
+          <h3 class="display" data-i18n="cta_left">Y lo mejor de todo es que es gratis!</h3>
+        </div>
+        <div class="social">
+          <a href="#" aria-label="Enlace"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.5-1.5"/></svg></a>
+          <a href="#" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.87.24-1.46 1.5-1.46H16.5V4.34C16.24 4.3 15.36 4.2 14.33 4.2c-2.14 0-3.6 1.31-3.6 3.7v2.6H8.3v3h2.43V21h2.77Z"/></svg></a>
+          <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.7"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+        </div>
+        <div class="right">
+          <h3 class="display" data-i18n="cta_right">Sólo te pido que si puedes, me invites a un café.</h3>
+        </div>
+      </div>
+
+      <div class="cta-buttons">
+        <div class="cta-group">
+          <a href="#" class="pill-btn"><span data-i18n="dl_win_1">Descargar para</span><br><span data-i18n="dl_win_2">Windows</span></a>
+          <a href="#" class="pill-btn"><span data-i18n="dl_mac_1">Descargar para</span><br><span data-i18n="dl_mac_2">Mac</span></a>
+        </div>
+        <div class="cta-group">
+          <a href="https://www.paypal.me/TUUSUARIO/1" class="pill-btn" target="_blank" rel="noopener"><span data-i18n="cof_pp_1">Toma tu café</span><br><span data-i18n="cof_pp_2">PayPal</span></a>
+          <a href="#" class="pill-btn" target="_blank" rel="noopener"><span data-i18n="cof_card_1">Toma tu café</span><br><span data-i18n="cof_card_2">Tarjeta</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="credits" data-i18n="footer">
+  InvisibleRPM · hecho para la comunidad DJ · gratis, sin cuentas, sin letra pequeña
+</footer>
+
+<script>
+  const dict = {
+    badge1: { es:"Tapa los BPM", en:"Cover the BPM" },
+    badge2: { es:"Tapa los BPM", en:"Cover the BPM" },
+    hero_h1: { es:"Aprende desde los cimientos:", en:"Learn from the ground up:" },
+    hero_p1: { es:"Además de desactivar el SYNC, es muy importante dejar de ver los BPM, como si tocáramos con vinilos.", en:"Besides turning off SYNC, it's just as important to stop watching the BPM, the way you would if you were playing vinyl." },
+    hero_p2: { es:"Ya no necesitas pegar posits en la pantalla: ha llegado una aplicación sencilla que te permite dejar de ver los BPM para afinar el oído y aprender de forma robusta.", en:"No more sticky notes on the screen: a simple app has arrived that lets you stop seeing the BPM, so you can train your ear and really learn to mix." },
+    hero_lead: { es:"Ha llegado InvisibleRPM", en:"InvisibleRPM has arrived" },
+    feat_tag: { es:"Qué hace", en:"What it does" },
+    feat_h2: { es:"Tres detalles que importan", en:"Three details that matter" },
+    feat1_t: { es:"Arrastrable y redimensionable", en:"Drag it, resize it" },
+    feat1_p: { es:"Coloca las dos ventanas negras exactamente donde quieras taparlas, ajusta el tamaño a tu gusto.", en:"Place the two black windows exactly where you need to cover the BPM, and resize them however you like." },
+    feat2_t: { es:"Con tu logo", en:"Add your logo" },
+    feat2_p: { es:"Inserta una imagen (BMP, JPG o PNG) que se reescala sola con la ventana. Tu marca, tu sesión.", en:"Drop in an image (BMP, JPG or PNG) that scales automatically with the window. Your brand, your set." },
+    feat3_t: { es:"Español e inglés", en:"Spanish and English" },
+    feat3_p: { es:"Cambia el idioma desde el menú de clic derecho, sin reiniciar nada.", en:"Switch languages from the right-click menu, no restart needed." },
+    cta_left: { es:"Y lo mejor de todo es que es gratis!", en:"And the best part? It's free!" },
+    cta_right: { es:"Sólo te pido que si puedes, me invites a un café.", en:"All I ask is that, if you can, you buy me a coffee." },
+    dl_win_1: { es:"Descargar para", en:"Download for" },
+    dl_win_2: { es:"Windows", en:"Windows" },
+    dl_mac_1: { es:"Descargar para", en:"Download for" },
+    dl_mac_2: { es:"Mac", en:"Mac" },
+    cof_pp_1: { es:"Toma tu café", en:"Buy me a coffee" },
+    cof_pp_2: { es:"PayPal", en:"PayPal" },
+    cof_card_1: { es:"Toma tu café", en:"Buy me a coffee" },
+    cof_card_2: { es:"Tarjeta", en:"Card" },
+    footer: { es:"InvisibleRPM · hecho para la comunidad DJ · gratis, sin cuentas, sin letra pequeña", en:"InvisibleRPM · made for the DJ community · free, no accounts, no fine print" }
+  };
+
+  function setLang(lang){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] && dict[key][lang]) el.textContent = dict[key][lang];
+    });
+    document.querySelectorAll('.lang-opt').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+  }
+
+  document.querySelectorAll('.lang-opt').forEach(function(btn){
+    btn.addEventListener('click', function(){ setLang(btn.getAttribute('data-lang')); });
+  });
+
+  setLang('es');
+</script>
+
+</body>
+</html>
