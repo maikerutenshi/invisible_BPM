@@ -131,19 +131,6 @@
     box-shadow:8px 8px 0 var(--coral);
   }
   .video-frame video{width:100%; height:100%; display:block; object-fit:cover;}
-  .tag-badge{
-    position:absolute;
-    background:var(--ink);
-    color:#fff;
-    font-size:12px;
-    font-weight:600;
-    padding:6px 12px;
-    border-radius:20px;
-    box-shadow:0 6px 14px rgba(0,0,0,0.25);
-    pointer-events:none;
-  }
-  .tag-badge.a{ top:38%; left:28%; }
-  .tag-badge.b{ top:60%; left:58%; }
 
   /* ---------- SECTIONS ---------- */
   section{padding:56px 0;}
@@ -273,8 +260,6 @@
           <source src="demo.mp4" type="video/mp4">
           Tu navegador no soporta vídeo HTML5.
         </video>
-        <span class="tag-badge a" data-i18n="badge1">Tapa los BPM</span>
-        <span class="tag-badge b" data-i18n="badge2">Tapa los BPM</span>
       </div>
 
       <div class="hero-copy">
@@ -348,8 +333,6 @@
 
 <script>
   const dict = {
-    badge1: { es:"Tapa los BPM", en:"Cover the BPM" },
-    badge2: { es:"Tapa los BPM", en:"Cover the BPM" },
     hero_h1: { es:"Aprende desde los cimientos:", en:"Learn from the ground up:" },
     hero_p1: { es:"Además de desactivar el SYNC, es muy importante dejar de ver los BPM, como si tocáramos con vinilos.", en:"Besides turning off SYNC, it's just as important to stop watching the BPM, the way you would if you were playing vinyl." },
     hero_p2: { es:"Ya no necesitas pegar posits en la pantalla: ha llegado una aplicación sencilla que te permite dejar de ver los BPM para afinar el oído y aprender de forma robusta.", en:"No more sticky notes on the screen: a simple app has arrived that lets you stop seeing the BPM, so you can train your ear and really learn to mix." },
