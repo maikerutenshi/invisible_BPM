@@ -196,6 +196,7 @@
     gap:14px;
   }
   @media (max-width:420px){ .cta-group{grid-template-columns:1fr;} }
+  .cof-btn{ align-self:stretch; }
 
   .pill-btn{
     display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -318,10 +319,7 @@
           <a href="#" class="pill-btn"><span data-i18n="dl_win_1">Descargar para</span><br><span data-i18n="dl_win_2">Windows</span></a>
           <a href="#" class="pill-btn"><span data-i18n="dl_mac_1">Descargar para</span><br><span data-i18n="dl_mac_2">Mac</span></a>
         </div>
-        <div class="cta-group">
-          <a href="https://www.paypal.me/TUUSUARIO/1" class="pill-btn" target="_blank" rel="noopener"><span data-i18n="cof_pp_1">Toma tu café</span><br><span data-i18n="cof_pp_2">PayPal</span></a>
-          <a href="#" class="pill-btn" target="_blank" rel="noopener"><span data-i18n="cof_card_1">Toma tu café</span><br><span data-i18n="cof_card_2">Tarjeta</span></a>
-        </div>
+        <a href="https://www.paypal.com/donate/?hosted_button_id=83JF8SQAEZ7D8" class="pill-btn cof-btn" target="_blank" rel="noopener"><span data-i18n="cof_1">Toma tu café</span><br><span data-i18n="cof_2">PayPal o tarjeta</span></a>
       </div>
     </div>
   </div>
@@ -351,10 +349,8 @@
     dl_win_2: { es:"Windows", en:"Windows" },
     dl_mac_1: { es:"Descargar para", en:"Download for" },
     dl_mac_2: { es:"Mac", en:"Mac" },
-    cof_pp_1: { es:"Toma tu café", en:"Buy me a coffee" },
-    cof_pp_2: { es:"PayPal", en:"PayPal" },
-    cof_card_1: { es:"Toma tu café", en:"Buy me a coffee" },
-    cof_card_2: { es:"Tarjeta", en:"Card" },
+    cof_1: { es:"Toma tu café", en:"Buy me a coffee" },
+    cof_2: { es:"PayPal o tarjeta", en:"PayPal or card" },
     footer: { es:"InvisibleRPM · hecho para la comunidad DJ · gratis, sin cuentas, sin letra pequeña", en:"InvisibleRPM · made for the DJ community · free, no accounts, no fine print" }
   };
 
